@@ -6,7 +6,7 @@ controller.CrearUserC = async function (req, res) {
     try {
         const usuarioData = req.body;
 
-        if (!usuarioData.identificacion || !usuarioData.nombreUsuario || !usuarioData.apellidoUsuario) {
+        if (!usuarioData.identificacion || !usuarioData.nombre || !usuarioData.apellido || !usuarioData.email || !usuarioData.contrasena || !usuarioData.direccion || !usuarioData.fecha_nacimiento) {
             return res.status(400).json({ error: 'Todos los campos son requeridos' });
         }
 
