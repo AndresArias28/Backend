@@ -4,14 +4,14 @@ const mysql = require('mysql2');
 
 const Usuario = {
     findAll : async function () {
-        return await pool.execute('SELECT * FROM Usuarios');
+        return await pool.execute('SELECT * FROM Usuario');
     } ,
     create : async function (UsuarioData) {
         if (!UsuarioData.identificacion || !UsuarioData.nombre || !UsuarioData.apellido || !UsuarioData.email || !UsuarioData.contrasena || !UsuarioData.direccion || !UsuarioData.fecha_nacimiento) {
             throw new Error('Todos los campos son requeridos');
         }
     
-        const user = `INSERT INTO Usuarios (identificacion, nombre, apellido, email, contrasena, direccion, fecha_nacimiento )
+        const user = `INSERT INTO Usuario (identificacion, nombre, apellido, email, contrasena, direccion, fecha_nacimiento )
         VALUES (?, ?, ?, ?, ?, ?, ?)`;
         return pool.execute(user, [UsuarioData.identificacion, UsuarioData.nombre, UsuarioData.apellido, UsuarioData.email, UsuarioData.contrasena, UsuarioData.direccion, UsuarioData.fecha_nacimiento]); 
     },
