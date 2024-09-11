@@ -14,7 +14,30 @@ const CrearUsuario = async function (UsuarioData) {
     }
 }
 
+const ActualizarUser = async function(idUsuario, NuevoUsuario){
+    try{
+        //const userId = req.params.id || req.body.id;
+
+        // Buscar el usuario por su ID
+        //const usuarioAeditar = await Usuario.findOneUsuario(userId);
+
+       
+
+        const usuarioActualizado = await Usuario.editUsuario(idUsuario, NuevoUsuario);
+
+        if (!usuarioActualizado) {
+            throw new Error('No se pudo actualizar el usuario, o el usuario no existe.');
+        }
+        
+        return usuarioActualizado;
+        
+    }catch(error){
+        throw error;
+    }
+}
+
 
 module.exports ={
-    CrearUsuario
+    CrearUsuario,
+    ActualizarUser
 }
