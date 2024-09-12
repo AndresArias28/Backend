@@ -6,7 +6,7 @@ controller.CrearUserC = async function (req, res) {
     try {
         const usuarioData = req.body;
 
-        if (!usuarioData.identificacion || !usuarioData.nombre || !usuarioData.apellido || !usuarioData.email || !usuarioData.contrasena || !usuarioData.direccion || !usuarioData.fecha_nacimiento) {
+        if (!usuarioData.identificacion || !usuarioData.nombreUsuario || !usuarioData.apellidoUsuario || !usuarioData.emailUsuario || !usuarioData.contrasenaUsuario || !usuarioData.direccionUsuario || !usuarioData.fechaNacimientoUsuario) {
             return res.status(400).json({ error: 'Todos los campos son requeridos' });
         }
 
@@ -22,9 +22,6 @@ controller.ActualizarUserC = async function (req, res) {
         const usuarioDatos = req.body;
         const idUsuario = req.params.id;
 
-       
-
-
         // Llamar al servicio para actualizar el usuario
         const user = await ActualizarUser(idUsuario, usuarioDatos)
 
@@ -32,9 +29,7 @@ controller.ActualizarUserC = async function (req, res) {
         return res.status(201).json(user);
     }catch(error){
         res.status(500).json({error: error.message})
-
     }
-    
 }
 
 module.exports = controller;
