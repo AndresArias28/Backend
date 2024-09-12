@@ -1,6 +1,16 @@
 const pool = require('../config/database');
 const mysql = require('mysql2');
 
+const UsuarioCleaned = Object
+    .keys(Usuario)
+    .reduce((prev, next)=>{
+        if(next === 'nombreUsuario') return prev
+
+        return{
+            ...prev,
+            [next]:Usuario[next]
+        }
+    })
 
 const Usuario = {
     findAll : async function () {
@@ -43,6 +53,8 @@ const Usuario = {
             throw error
         }
     }
+ 
+
 }
 
 
