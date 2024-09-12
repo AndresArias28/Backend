@@ -1,9 +1,10 @@
-const mysql = require('mysql2');
+//configuracion a la base de datos
+const mysql = require('mysql2'); //importa la biblioteca
 
 const pool = mysql.createConnection({
-    host: 'localhost',
+    host: '127.0.0.1',
     user: 'root',
-    password: 'root',
+    //password: 'root',
     database: 'Backend',
 
 });
@@ -18,3 +19,5 @@ pool.query('SELECT 1 + 1 AS solution', function(err, rows){
 });
 
 module.exports = pool.promise();
+
+//configura una conexión a una base de datos MySQL y prueba la conexión ejecutando una consulta simple.
