@@ -1,7 +1,6 @@
 const pool = require('../config/database');
 const mysql = require('mysql2');
 
-
 const Usuario = {
     findAll : async function () {
         return await pool.execute('SELECT * FROM Usuario');
@@ -43,6 +42,8 @@ const Usuario = {
             throw error
         }
     }
+ 
+
 }
 
 
