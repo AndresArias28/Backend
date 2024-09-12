@@ -1,11 +1,14 @@
+//consultas a la base de datos de mysql2 
 const pool = require('../config/database');
 const mysql = require('mysql2');
 
 
 const Usuario = {
+    //funcion para mostrar todo de la tabla usuarios, funciona asincronica nos retorna una consulta
     findAll : async function () {
         return await pool.execute('SELECT * FROM Usuario');
     } ,
+    //
     create : async function (UsuarioData) {
         if (!UsuarioData.identificacion || !UsuarioData.nombreUsuario || !UsuarioData.apellidoUsuario) {
             throw new Error('Todos los campos son requeridos');

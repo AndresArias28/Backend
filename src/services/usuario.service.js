@@ -1,3 +1,4 @@
+//manejamos las solicitudes
 const Usuario = require('../models/usuario.model');
 
 
