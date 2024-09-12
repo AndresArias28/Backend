@@ -18,3 +18,5 @@ pool.query('SELECT 1 + 1 AS solution', function(err, rows){
 });
 
 module.exports = pool.promise();
+
+//configura una conexión a una base de datos MySQL y prueba la conexión ejecutando una consulta simple.

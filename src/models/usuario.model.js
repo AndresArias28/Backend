@@ -2,7 +2,6 @@
 const pool = require('../config/database');
 const mysql = require('mysql2');
 
-
 const Usuario = {
     //funcion para mostrar todo de la tabla usuarios, funciona asincronica nos retorna una consulta
     findAll : async function () {
@@ -10,22 +9,22 @@ const Usuario = {
     } ,
     //
     create : async function (UsuarioData) {
-        if (!UsuarioData.identificacion || !UsuarioData.nombreUsuario || !UsuarioData.apellidoUsuario) {
+        if (!UsuarioData.identificacion || !UsuarioData.nombre || !UsuarioData.apellido || !UsuarioData.email || !UsuarioData.contrasena || !UsuarioData.direccion || !UsuarioData.fecha_nacimiento) {
             throw new Error('Todos los campos son requeridos');
         }
     
-        const user = `INSERT INTO Usuario (identificacion, nombreUsuario, apellidoUsuario)
-        VALUES (?, ?, ?)`;
-        return pool.execute(user, [UsuarioData.identificacion, UsuarioData.nombreUsuario, UsuarioData.apellidoUsuario]); 
+        const user = `INSERT INTO Usuario (identificacion, nombre, apellido, email, contrasena, direccion, fecha_nacimiento )
+        VALUES (?, ?, ?, ?, ?, ?, ?)`;
+        return pool.execute(user, [UsuarioData.identificacion, UsuarioData.nombre, UsuarioData.apellido, UsuarioData.email, UsuarioData.contrasena, UsuarioData.direccion, UsuarioData.fecha_nacimiento]); 
     },
-    findOneUsuario: async function (idUsuario) {
+    findOneUsuario: async function (idUsuario) {//devuelve un usuario específico por su ID.
        return await pool.execute('SELECT * FROM Usuario where idUsuario = ?', [idUsuario]);
     },
-    editUsuario: async function (idUsuario, NuevoUsuario) {
+    editUsuario: async function (idUsuario, NuevoUsuario) {//actualiza un usuario existente en la base de datos
         try{
             const [result] = await pool.execute(
-                `UPDATE Usuario SET identificacion = ?, nombreUsuario = ?, apellidoUsuario = ? WHERE idUsuario = ?`, 
-                [NuevoUsuario.identificacion, NuevoUsuario.nombreUsuario, NuevoUsuario.apellidoUsuario, idUsuario]
+                `UPDATE Usuario SET identificacion = ?, nombre = ?, apellido = ?, email = ?, contrasena = ?, direccion = ?, fecha_nacimiento = ?  WHERE identificacion = ?`, 
+                [NuevoUsuario.identificacion, NuevoUsuario.nombre, NuevoUsuario.apellido, NuevoUsuario.email, NuevoUsuario.contrasena, NuevoUsuario.direccion, NuevoUsuario.fecha_nacimiento, idUsuario]
             );
             if (result.affectedRows === 0){
                 throw new Error('No se encontró el usuario');
@@ -37,15 +36,17 @@ const Usuario = {
     },    
     DeleteUsaurio: async function (idUsuario) {
         try{
-          const [result] =await pool.execute('DELETE FROM Usuario WHERE idUsuario = ?', [idUsuario])
-          if(result.affectedRows === 0){
+            const [result] =await pool.execute('DELETE FROM Usuario WHERE idUsuario = ?', [idUsuario])
+            if(result.affectedRows === 0){
             throw new console.error('Usuario no existe')
-          }
-          return {message: 'Usuario elimnado existosamente'}
+            }
+            return {message: 'Usuario elimnado existosamente'}
         }catch(error){
             throw error
         }
     }
+ 
+
 }
 
 

@@ -14,5 +14,8 @@ Backend.use(morgan('dev'));
 Backend.use(usuarioRoutes);
 
 
-Backend.set('port', process.env.PORT || port );
-module.exports = Backend
+Backend.set('port', process.env.PORT || port );//puerto dinamico
+module.exports = Backend//exporta la instancia del servidor web, lo que permite que se pueda importar y utilizar en otros archivos
+//se ejecuta a travez de la libreria de express
+
+//RESUMEN: configura el servidor web utilizando Express, registra las rutas para los usuarios y configura el puerto dinámico.
