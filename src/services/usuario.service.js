@@ -1,8 +1,8 @@
 const Usuario = require('../models/usuario.model');
 
-//función asíncrona que crea un nuevo usuario en la base de datos
-const CrearUsuario = async function (UsuarioData) {//UsuarioData es un parametro que contiene los datos
-    if (!UsuarioData.identificacion || !UsuarioData.nombreUsuario || !UsuarioData.apellidoUsuario) {
+
+const CrearUsuario = async function (UsuarioData) {
+    if (!UsuarioData.identificacion || !UsuarioData.nombre || !UsuarioData.apellido || !UsuarioData.email || !UsuarioData.contrasena || !UsuarioData.direccion || !UsuarioData.fecha_nacimiento) {
         throw new Error('Todos los campos son requeridos');
     }
 
@@ -14,8 +14,26 @@ const CrearUsuario = async function (UsuarioData) {//UsuarioData es un parametro
     }
 }
 
+const ActualizarUser = async function(idUsuario, NuevoUsuario){
+    try{
+         
+        const usuarioActualizado = await Usuario.editUsuario(idUsuario, NuevoUsuario);
+
+        if (!usuarioActualizado) {
+            throw new Error('No se pudo actualizar el usuario, o el usuario no existe.');
+        }
+        
+        return usuarioActualizado;
+        
+    }catch(error){
+        throw error;
+    }
+}
+
+
 module.exports ={
-    CrearUsuario
+    CrearUsuario,
+    ActualizarUser
 }
 
 /*
