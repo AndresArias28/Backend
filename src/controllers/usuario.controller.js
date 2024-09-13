@@ -1,4 +1,4 @@
-const {CrearUsuario, ActualizarUser} = require('../services/usuario.service')
+const {CrearUsuario, ActualizarUser, getUserByEmail} = require('../services/usuario.service')
 
 const controller = {}; //define el controlador
 
@@ -36,6 +36,19 @@ controller.ActualizarUserC = async function (req, res) {
     }
     
 }
+controller.GetUserByEmailC = async (req, res) => {
 
+    const { email } = req.params;
+
+    try {
+        const usuario = await getUserByEmail(email);
+        res.status(200).json(usuario);
+    } catch (error) {
+        if (error.message === 'Usuario no encontrado') {
+            return res.status(404).json({ error: 'Usuario no encontrado' });
+        }
+        res.status(500).json({ error: error.message });
+    }
+}
 module.exports = controller;
 //exporta el objeto controller que contiene la función CrearUserC, lo que permite que se pueda importar y utilizar en otros archivos.

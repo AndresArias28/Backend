@@ -2,10 +2,10 @@
 const mysql = require('mysql2'); //importa la biblioteca
 
 const pool = mysql.createConnection({
-    host: '127.0.0.1',
+    host: 'localhost',
     user: 'root',
-    //password: 'root',
-    database: 'Backend',
+    password: 'root',
+    database: 'backend',
 
 });
 
