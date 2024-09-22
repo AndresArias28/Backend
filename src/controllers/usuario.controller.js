@@ -1,9 +1,13 @@
 const {CrearUsuario, ActualizarUser} = require('../services/usuario.service')
-
+const validarCamposRequeridos = require('../middleware/camposRequeridos')
 const controller = {}; //define el controlador
 
 controller.CrearUserC = async function (req, res) {
     try {
+        // Validar los campos del usuario
+        validarCamposRequeridos(['identificacion', 'nombre', 'apellido','email', 'contrasena', 'direccion', 'fecha_nacimiento']) (req, res, async()=>{
+
+        
         const usuarioData = req.body; //valida los campos de usuarios
 
         if (!usuarioData.identificacion || !usuarioData.nombre || !usuarioData.apellido || !usuarioData.email || !usuarioData.contrasena || !usuarioData.direccion || !usuarioData.fecha_nacimiento) {
@@ -12,6 +16,7 @@ controller.CrearUserC = async function (req, res) {
 
         const user = await CrearUsuario(usuarioData);//Si son correctos se crea el usuario
         res.status(201).json(user);//Si la operación es exitosa, se devuelve un estado 201 con el usuario creado.
+    })
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
