@@ -1,5 +1,5 @@
 const {CrearUsuario, ActualizarUser, ListarUsuarios} = require('../services/usuario.service')
-const validarCamposRequeridos = require('../middleware/camposRequeridos')
+const validarCamposRequeridos = require('../middleware/camposRequeridos');
 const controller = {}; //define el controlador
 
 controller.ListarUsuariosC = async function (req, res) {
@@ -37,9 +37,6 @@ controller.ActualizarUserC = async function (req, res) {
     try{
         const usuarioDatos = req.body;
         const idUsuario = req.params.id;
-
-       
-
 
         // Llamar al servicio para actualizar el usuario
         const user = await ActualizarUser(idUsuario, usuarioDatos)
