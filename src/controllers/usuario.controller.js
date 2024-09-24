@@ -1,6 +1,17 @@
-const {CrearUsuario, ActualizarUser} = require('../services/usuario.service')
+const {CrearUsuario, ActualizarUser, ListarUsuarios} = require('../services/usuario.service')
 const validarCamposRequeridos = require('../middleware/camposRequeridos')
 const controller = {}; //define el controlador
+
+controller.ListarUsuariosC = async function (req, res) {
+    
+    try {
+        const usuarios = await ListarUsuarios(UsuarioData); //Llama al servicio para obtener los usuarios
+        res.json(usuarios); //Si la operación es exitosa, se devuelve un estado 200 con los usuarios.
+    } catch (error) {
+        res.status(500).json({ error: error.message  }); //Si hay un error, se devuelve un estado 500 con el mensaje de error.
+    }
+
+}
 
 controller.CrearUserC = async function (req, res) {
     try {
