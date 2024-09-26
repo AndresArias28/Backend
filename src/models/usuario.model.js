@@ -6,13 +6,13 @@ const Usuario = {
         return await pool.execute('SELECT * FROM Usuario');
     } ,
     create : async function (UsuarioData) {
-        if (!UsuarioData.identificacion || !UsuarioData.nombreUsuario || !UsuarioData.apellidoUsuario || !UsuarioData.emailUsuario || !UsuarioData.contrasenaUsuario || !UsuarioData.direccionUsuario || !UsuarioData.fechaNacimientoUsuario) {
+        if (!UsuarioData.identificacion || !UsuarioData.nombre || !UsuarioData.apellido || !UsuarioData.email || !UsuarioData.contrasena || !UsuarioData.direccion || !UsuarioData.fechaNacimiento) {
             throw new Error('Todos los campos son requeridos');
         }
     
-        const user = `INSERT INTO Usuario (identificacion, nombreUsuario, apellidoUsuario, emailUsuario, contrasenaUsuario, direccionUsuario, fechaNacimientoUsuario )
+        const user = `INSERT INTO Usuario (identificacion, nombre, apellido, email, contrasena, direccion, fechaNacimiento )
         VALUES (?, ?, ?, ?, ?, ?, ?)`;
-        return pool.execute(user, [UsuarioData.identificacion, UsuarioData.nombreUsuario, UsuarioData.apellidoUsuario, UsuarioData.emailUsuario, UsuarioData.contrasenaUsuario, UsuarioData.direccionUsuario, UsuarioData.fechaNacimientoUsuario]); 
+        return pool.execute(user, [UsuarioData.identificacion, UsuarioData.nombre, UsuarioData.apellido, UsuarioData.email, UsuarioData.contrasena, UsuarioData.direccion, UsuarioData.fechaNacimiento]); 
     },
     findOneUsuario: async function (idUsuario) {
        return await pool.execute('SELECT * FROM Usuario where idUsuario = ?', [idUsuario]);
