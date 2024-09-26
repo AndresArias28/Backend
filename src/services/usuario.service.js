@@ -31,7 +31,25 @@ const ActualizarUser = async function(idUsuario, NuevoUsuario){
 }
 
 
+const BuscarUsuarioporid = async function(idUsuario){
+    try{
+         
+        const buscandousuario = await Usuario.findOneUsuario(idUsuario);
+
+        if (!buscandousuario) {
+            throw new Error('No se pudo actualizar el usuario, o el usuario no existe.');
+        }
+
+        return buscandousuario;
+        
+    }catch(error){
+        throw error;
+    }
+}
+
+
 module.exports ={
     CrearUsuario,
-    ActualizarUser
+    ActualizarUser,
+    BuscarUsuarioporid 
 }

@@ -16,7 +16,7 @@ const Usuario = {
         return pool.execute(user, [UsuarioData.identificacion, UsuarioData.nombre, UsuarioData.apellido, UsuarioData.email, UsuarioData.contrasena, UsuarioData.direccion, UsuarioData.fecha_nacimiento]); 
     },
     findOneUsuario: async function (idUsuario) {
-       return await pool.execute('SELECT * FROM Usuario where idUsuario = ?', [idUsuario]);
+       return await pool.execute('SELECT * FROM Usuario where identificacion = ?', [idUsuario]);
     },
     editUsuario: async function (idUsuario, NuevoUsuario) {
         try{
