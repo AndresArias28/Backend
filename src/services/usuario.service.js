@@ -53,14 +53,24 @@ const ActualizarUser = async function(idUsuario, NuevoUsuario){
         throw error;
     }
 }
-
-
-
+const getUserByEmail = async (email) => {
+    try {
+        
+        const [rows] = await Usuario.findUserByEmail(email);
+        if (rows.length === 0) {
+            throw new Error('Usuario no encontrado');
+        }
+        return rows[0]; 
+    } catch (error) {
+        throw error; 
+    } 
+}
 
 module.exports ={
     CrearUsuario,
     ActualizarUser,
-    ListarUsuarios
+    ListarUsuarios,
+    getUserByEmail
 }
 
 /*
