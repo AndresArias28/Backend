@@ -7,7 +7,7 @@ const {
     CrearUserC, 
     ActualizarUserC, 
     ListarUsuariosC,
-     GetUserByEmailC
+     GetUserByEmailC, BuscarUsuarioporid
 } = require('../controllers/usuario.controller')
 
 const {
@@ -29,6 +29,7 @@ router.put('/actualizarRol/:id', EditRolC);
 
 
 router.get('/obtenerUsuarioPorEmail/:email', GetUserByEmailC);
+router.get('/buscarUser/:id',BuscarUsuarioporid);
 
 module.exports = router
 

@@ -1,4 +1,4 @@
-const {CrearUsuario, ActualizarUser, ListarUsuarios, getUserByEmail} = require('../services/usuario.service')
+const {CrearUsuario, ActualizarUser, ListarUsuarios, getUserByEmail,BuscarUsuarioporid} = require('../services/usuario.service')
 const validarCamposRequeridos = require('../middleware/camposRequeridos');
 const controller = {}; //define el controlador
 
@@ -63,5 +63,27 @@ controller.GetUserByEmailC = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 }
+module.exports = controller;
+
+
+controller.BuscarUsuarioporid= async function (req, res) {
+    try{
+        const idUsuario = req.params.id;
+
+       
+
+
+        // Llamar al servicio para actualizar el usuario
+        const user = await BuscarUsuarioporid(idUsuario)
+
+        // Enviar la respuesta
+        return res.status(201).json(user);
+    }catch(error){
+        res.status(500).json({error: error.message})
+
+    }
+    
+}
+
 module.exports = controller;
 //exporta el objeto controller que contiene la función CrearUserC, lo que permite que se pueda importar y utilizar en otros archivos.
