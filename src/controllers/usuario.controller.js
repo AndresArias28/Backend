@@ -1,4 +1,4 @@
-const {CrearUsuario, ActualizarUser, ListarUsuarios, getUserByEmail,BuscarUsuarioporid} = require('../services/usuario.service')
+const {CrearUsuario, ActualizarUser, ListarUsuarios, getUserByEmail,BuscarUsuarioporid, Login} = require('../services/usuario.service')
 const validarCamposRequeridos = require('../middleware/camposRequeridos');
 const controller = {}; //define el controlador
 
@@ -16,12 +16,12 @@ controller.ListarUsuariosC = async function (req, res) {
 controller.CrearUserC = async function (req, res) {
     try {
         // Validar los campos del usuario
-        validarCamposRequeridos(['identificacion', 'nombre', 'apellido','email', 'contrasena', 'direccion', 'fecha_nacimiento']) (req, res, async()=>{
+        validarCamposRequeridos(['identificacion', 'nombre', 'apellido','email',  'direccion', 'fecha_nacimiento']) (req, res, async()=>{
 
         
         const usuarioData = req.body; //valida los campos de usuarios
 
-        if (!usuarioData.identificacion || !usuarioData.nombre || !usuarioData.apellido || !usuarioData.email || !usuarioData.contrasena || !usuarioData.direccion || !usuarioData.fecha_nacimiento) {
+        if (!usuarioData.identificacion || !usuarioData.nombre || !usuarioData.apellido || !usuarioData.email  || !usuarioData.direccion || !usuarioData.fecha_nacimiento) {
             return res.status(400).json({ error: 'Todos los campos son requeridos' });
         }
 
@@ -31,6 +31,15 @@ controller.CrearUserC = async function (req, res) {
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
+}
+
+controller.LoginC =  async function (req, res) {
+    try{
+        await Login(req, res);
+    }catch(error){
+        res.status(500)
+    }
+    
 }
 
 controller.ActualizarUserC = async function (req, res) {
