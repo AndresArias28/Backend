@@ -98,7 +98,6 @@ const ActualizarUser = async function (idUsuario, NuevoUsuario) {
 
 const getUserByEmail = async (email) => {
     try {
-
         const [rows] = await Usuario.findUserByEmail(email);
         if (rows.length === 0) {
             throw new Error('Usuario no encontrado');
@@ -111,7 +110,6 @@ const getUserByEmail = async (email) => {
 
 const BuscarUsuarioporid = async function (idUsuario) {
     try {
-
         const buscandousuario = await Usuario.findOneUsuario(idUsuario);
         if (!buscandousuario) {
             throw new Error('No se pudo actualizar el usuario, o el usuario no existe.');
