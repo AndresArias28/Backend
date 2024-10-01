@@ -1,7 +1,9 @@
 //manejamos las solicitudes
 const Usuario = require('../models/usuario.model');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+require('dotenv').config();
+const {listaNegraService} = require('./ListaNegraService')
 
 
 //exportamos las funciones
@@ -20,7 +22,7 @@ const ObtenerUsuarioPorId = async function (idUsuario) {
 }
 
 // funcion para listar usuarios de la Bd
-const ListarUsuarios = async function (UsuarioData) {
+const ListarUsuarios = async function (){
     try {
         const usuarios = await Usuario.findAll({});
         return usuarios;
@@ -29,16 +31,19 @@ const ListarUsuarios = async function (UsuarioData) {
     }
 }
 const CrearUsuario = async function (UsuarioData) {
+    
+
     try {
         if (!UsuarioData) {
             throw new Error('Todos los campos son requeridos');
         }
-        const password = UsuarioData.identificacion;
-        if (!password) {
+        const Password =  UsuarioData.identificacion
+        if(!Password){
             throw new Error
         }
-        const PasswordEncriptado = await bcrypt.hash(password, 10);
+        const PasswordEncriptado = await bcrypt.hash(Password, 10);
         UsuarioData.contrasena = PasswordEncriptado;
+
         const usuarioCreado = await Usuario.create(UsuarioData);
         return usuarioCreado;
     } catch (error) {
@@ -46,19 +51,17 @@ const CrearUsuario = async function (UsuarioData) {
     }
 }
 
-const CrearToken = async function (user) {
-    const { id, identificacion } = user;
-    const payload = { id, identificacion };
+
+const CrearToken =  async function (user){
+    const {id, identificacion} = user;
+    const payload = {id, identificacion};
     console.log(payload);
-    const secret = process.env.JWT_SECRET;//traer la palabra del archivo
-    if (!secret) {
-        console.error('La clave secreta JWT_SECRET no está definida');
-        process.exit(1); // Finaliza el proceso si la clave no está definida
-    }
-    const options = { expiresIn: '30m' };
+    const secret = process.env.JWT_SECRET;
+    const options = {expiresIn: '30m'};
     const token = jwt.sign(payload, secret, options);
-    return token;
+    return token
 }
+
 
 const Login = async function (req, res) {
     try {
@@ -68,24 +71,26 @@ const Login = async function (req, res) {
         }
         const [users] = await Usuario.findUserByEmail(email);
         if (users.length === 0) {
-            return res.status(400).json({ error: 'Usuario no encontrado' })
+            return res.status(404).json({ error: 'Usuario no encontrado' });
         }
 
-        const user = users[0]//el primero que encuentre de la lista
-        const isPasswordValid = await bcrypt.compare(contrasena, user.contrasena)
+        const user = users[0];
+        const isPasswordValid = await bcrypt.compare(contrasena, user.contrasena);
         if (!isPasswordValid) {
-            return res.status(400).json({ error: 'Contraseña Incorrecta' })
+            return res.status(401).json({ error: 'Contraseña incorrecta' });
         }
-        const token = await CrearToken(user)
-        return res.status(200).json({ message: "Inicio de sesion exitoso", token })
+        const token = await CrearToken(user);
+        return res.status(200).json({ message: 'Inicio de sesión exitoso', token });
+
     } catch (error) {
-        console.error(error)
-        return res.status(500).json({ error: 'Error al iniciar sesion' });
+        console.error(error);
+        return res.status(500).json({ error: 'Error al iniciar sesión' });
     }
 };
 
-const ActualizarUser = async function (idUsuario, NuevoUsuario) {
-    try {
+const ActualizarUser = async function(idUsuario, NuevoUsuario){
+    try{
+         
         const usuarioActualizado = await Usuario.editUsuario(idUsuario, NuevoUsuario);
         if (!usuarioActualizado) {
             throw new Error('No se pudo actualizar el usuario, o el usuario no existe.');
@@ -119,14 +124,24 @@ const BuscarUsuarioporid = async function (idUsuario) {
         throw error;
     }
 }
+const cerrarSesion = async (token) => {
+    try {
+      await listaNegraService.agregarToken(token);
+      return { message: 'Sesión cerrada exitosamente' };
+    } catch (error) {
+      throw error;
+    }
+  };
 
-module.exports = {
+
+module.exports ={
     CrearUsuario,
     ActualizarUser,
     BuscarUsuarioporid,
     ListarUsuarios,
     getUserByEmail,
-    Login
+    Login,
+    cerrarSesion
 }
 
 /*
