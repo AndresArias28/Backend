@@ -3,6 +3,7 @@ const Usuario = require('../models/usuario.model');
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 require('dotenv').config();
+const {listaNegraService} = require('./ListaNegraService')
 
 
 //exportamos las funciones
@@ -21,7 +22,7 @@ const ObtenerUsuarioPorId = async function (idUsuario) {
 }
 
 // funcion para listar usuarios de la Bd
-const ListarUsuarios = async function (UsuarioData){
+const ListarUsuarios = async function (){
     try {
         const usuarios = await Usuario.findAll({});
         return usuarios;
@@ -130,6 +131,14 @@ const BuscarUsuarioporid = async function(idUsuario){
         throw error;
     }
 }
+const cerrarSesion = async (token) => {
+    try {
+      await listaNegraService.agregarToken(token);
+      return { message: 'Sesión cerrada exitosamente' };
+    } catch (error) {
+      throw error;
+    }
+  };
 
 
 module.exports ={
@@ -138,7 +147,8 @@ module.exports ={
     BuscarUsuarioporid ,
     ListarUsuarios,
     getUserByEmail,
-    Login
+    Login,
+    cerrarSesion
 }
 
 /*
