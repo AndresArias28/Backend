@@ -14,7 +14,7 @@ const Usuario = {
 
         const user = `INSERT INTO Usuario (identificacion, nombre, apellido, email, contrasena, direccion, fecha_nacimiento, idRol )
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
-        return pool.execute(user, [UsuarioData.identificacion, UsuarioData.nombre, UsuarioData.apellido, UsuarioData.email, UsuarioData.contrasena, UsuarioData.direccion, UsuarioData.fecha_nacimiento. UsuarioData.idRol]);
+        return pool.execute(user, [UsuarioData.identificacion, UsuarioData.nombre, UsuarioData.apellido, UsuarioData.email, UsuarioData.contrasena, UsuarioData.direccion, UsuarioData.fecha_nacimiento, UsuarioData.idRol]);
     },
     findOneUsuario: async function (id) {//devuelve un usuario específico por su ID.
         return await pool.execute('SELECT * FROM Usuario where idUsuario = ?', [id]);
