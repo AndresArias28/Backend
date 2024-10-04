@@ -21,7 +21,20 @@ const listarFactura = async () => {
     }
 }
 
+const EditarFactura = async (idFactura, nuevaFactura) => {
+    try{
+        const result = await DetalleVenta.update(idFactura, nuevaFactura);
+        if (result === 0) {
+            throw new Error('No se encontró el usuario');
+        }
+        return { message: 'Factura se actualizó correctamente' };
+    }catch(error){
+        throw error;
+    }
+}
+
 module.exports = {
     CreateDetalle,
-    listarFactura
+    listarFactura,
+    EditarFactura
 }
