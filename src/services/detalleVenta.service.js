@@ -33,8 +33,21 @@ const EditarFactura = async (idFactura, nuevaFactura) => {
     }
 }
 
+const DeleteFactura = async (idFactura) => {
+    try{
+        const result = await DetalleVenta.delete(idFactura);
+        if (result === 0) {
+            throw new Error('No se encontró el usuario');
+        }
+        return { message: 'Factura eliminada correctamente' };
+    }catch(error){
+        throw error;
+    }
+}
+
 module.exports = {
     CreateDetalle,
     listarFactura,
-    EditarFactura
+    EditarFactura,
+    DeleteFactura
 }

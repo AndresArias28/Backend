@@ -20,9 +20,23 @@ const DetalleVenta = {
                 [nuevaFactura.cantidad, nuevaFactura.precio_unitario, idFactura]
             );
             if (result.affectedRows === 0) {
-                throw new Error('No se encontró el usuario');
+                throw new Error('No se encontró la factura');
             }
             return { mensaje: 'Factura se actualizó correctamente' };
+        } catch (error) {
+            throw error;
+        }
+    },
+    delete: async function (idFactura) {
+        try {
+            const [result] = await pool.execute(
+                `DELETE FROM Detalleventa WHERE id = ?`,
+                [idFactura]
+            );
+            if (result.affectedRows === 0) {
+                throw new Error('No se encontró la factura');
+            }
+            return { mensaje: 'Factura eliminada correctamente' };
         } catch (error) {
             throw error;
         }
