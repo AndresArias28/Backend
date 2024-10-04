@@ -1,4 +1,4 @@
-const {CreateDetalle} = require('../services/detalleVenta.service')
+const {CreateDetalle, listarFactura} = require('../services/detalleVenta.service')
 const validarCamposRequeridos = require('../middleware/camposRequeridos');
 const controller = {}; 
 
@@ -14,4 +14,14 @@ controller.CreateDetalleC = async function (req, res, next) {
         res.status(500).json({ error: error.message });
     }
 };
+
+controller.ListarDetalleC = async function (req, res) {
+    try {
+        const detalleVentas = await listarFactura();
+        res.json(detalleVentas);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 module.exports = controller;

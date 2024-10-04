@@ -3,7 +3,7 @@ const mysql = require('mysql2');
 
 const DetalleVenta = {
     findAll: async function() {
-        return await pool.execute('SELECT * FROM Detalle_Venta');
+        return await pool.execute('SELECT * FROM Detalleventa');
     },
     create: async function(DetalleVentaData) {
         if (!DetalleVentaData.cantidad || !DetalleVentaData.precio_unitario) {

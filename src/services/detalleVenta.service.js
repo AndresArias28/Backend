@@ -12,6 +12,16 @@ const CreateDetalle = async (DetalleVentaData) => {
     }
 }
 
+const listarFactura = async () => {
+    try{
+        const [rows] = await DetalleVenta.findAll();
+        return rows;
+    }catch(error){
+        throw error;
+    }
+}
+
 module.exports = {
-    CreateDetalle
+    CreateDetalle,
+    listarFactura
 }

@@ -14,7 +14,7 @@ pool.query('SELECT 1 + 1 AS solution', function(err, rows){
         console.error('Error al conectarse a la base de datos', err)
         return
     };
-    console.log('conecion exitosa a mysql:', rows[0].solution);
+    console.log('conexión exitosa a mysql:', rows[0].solution);
     
 });
 
