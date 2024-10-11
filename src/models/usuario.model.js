@@ -1,6 +1,6 @@
 //consultas a la base de datos de mysql2 
 const pool = require('../config/database');
-const mysql = require('mysql2');
+//const mysql = require('mysql2');
 
 const Usuario = {
     //funcion para mostrar todo de la tabla usuarios, funciona asincronica nos retorna una consulta
@@ -17,7 +17,7 @@ const Usuario = {
         return pool.execute(user, [UsuarioData.identificacion, UsuarioData.nombre, UsuarioData.apellido, UsuarioData.email, UsuarioData.contrasena, UsuarioData.direccion, UsuarioData.fecha_nacimiento, UsuarioData.idRol]);
     },
     findOneUsuario: async function (id) {//devuelve un usuario específico por su ID.
-        return await pool.execute('SELECT * FROM Usuario where idUsuario = ?', [id]);
+        return await pool.execute('SELECT * FROM Usuario where id = ?', [id]);
 
     },
     findUserByEmail: async (email) => {
@@ -39,7 +39,7 @@ const Usuario = {
     },
     DeleteUsaurio: async function (idUsuario) {
         try {
-            const [result] = await pool.execute('DELETE FROM Usuario WHERE idUsuario = ?', [idUsuario])
+            const [result] = await pool.execute('DELETE FROM Usuario WHERE id = ?', [idUsuario])
             if (result.affectedRows === 0) {
                 throw new console.error('Usuario no existe')
             }

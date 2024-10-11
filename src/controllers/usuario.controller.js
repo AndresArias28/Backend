@@ -1,4 +1,4 @@
-const {CrearUsuario, ActualizarUser, ListarUsuarios, getUserByEmail,BuscarUsuarioporid, Login, cerrarSesion} = require('../services/usuario.service')
+const {CrearUsuario, ActualizarUser, ListarUsuarios, getUserByEmail,BuscarUsuarioporid, Login, cerrarSesion, EliminarUsuario} = require('../services/usuario.service')
 const validarCamposRequeridos = require('../middleware/camposRequeridos');
 const controller = {}; //define el controlador
 
@@ -16,8 +16,7 @@ controller.CrearUserC = async function (req, res) {
         // Validar los campos del usuario
         validarCamposRequeridos(['identificacion', 'nombre', 'apellido','email',  'direccion', 'fecha_nacimiento', 'idRol']) (req, res, async()=>{
 
-        
-        const usuarioData = req.body; //valida los campos de usuarios
+        const usuarioData = req.body; 
 
         if (!usuarioData.identificacion || !usuarioData.nombre || !usuarioData.apellido || !usuarioData.email  || !usuarioData.direccion || !usuarioData.fecha_nacimiento || !usuarioData.idRol) {
             return res.status(400).json({ error: 'Todos los campos son requeridos' });
@@ -27,6 +26,16 @@ controller.CrearUserC = async function (req, res) {
     })
     } catch (error) {
         res.status(500).json({ error: error.message });
+    }
+}
+
+controller.EliminarUsuarioC = async function (req, res) {
+    try{
+        const id = req.params.id;
+        await EliminarUsuario(id);
+        res.status(200).json({message: 'Usuario eliminado exitosamente'});
+    }catch(error){
+        res.status(500).json({error: error.message})
     }
 }
 

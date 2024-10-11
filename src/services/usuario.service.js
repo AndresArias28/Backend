@@ -5,13 +5,12 @@ const jwt = require('jsonwebtoken')
 require('dotenv').config();
 const {listaNegraService} = require('./ListaNegraService')
 
-
 //exportamos las funciones
 
 //funcion para filtrar usuario por su id 
 const ObtenerUsuarioPorId = async function (idUsuario) {
     try {
-        const usuario = await Usuario.findByPk(idUsuario);
+        const usuario = await Usuario.findOneUsuario(idUsuario);
         if (!usuario) {
             throw new Error('No se encontró el usuario.');
         }
@@ -30,9 +29,23 @@ const ListarUsuarios = async function (){
         throw error;
     }
 }
-const CrearUsuario = async function (UsuarioData) {
-    
 
+const EliminarUsuario = async function (idUsuario) {
+    try {
+        const usuario = await ObtenerUsuarioPorId(idUsuario);
+        if(!usuario){
+            throw new Error('No se encontró el usuario.');
+        }
+         await Usuario.DeleteUsaurio(idUsuario); 
+             
+       // const usuarioEliminado = await EliminarUsuario(idUsuario);
+        //return usuarioEliminado;
+    } catch (error) {
+        throw error;
+    }
+}
+
+const CrearUsuario = async function (UsuarioData) {
     try {
         if (!UsuarioData) {
             throw new Error('Todos los campos son requeridos');
@@ -51,7 +64,6 @@ const CrearUsuario = async function (UsuarioData) {
     }
 }
 
-
 const CrearToken =  async function (user){
     const {id, identificacion} = user;
     const payload = {id, identificacion};
@@ -61,7 +73,6 @@ const CrearToken =  async function (user){
     const token = jwt.sign(payload, secret, options);
     return token
 }
-
 
 const Login = async function (req, res) {
     try {
@@ -127,6 +138,7 @@ const BuscarUsuarioporid = async function (idUsuario) {
         throw error;
     }
 }
+
 const cerrarSesion = async (token) => {
     try {
       await listaNegraService.agregarToken(token);
@@ -136,7 +148,6 @@ const cerrarSesion = async (token) => {
     }
   };
 
-
 module.exports ={
     CrearUsuario,
     ActualizarUser,
@@ -144,7 +155,8 @@ module.exports ={
     ListarUsuarios,
     getUserByEmail,
     Login,
-    cerrarSesion
+    cerrarSesion,
+    EliminarUsuario
 }
 
 /*
